@@ -1,0 +1,38 @@
+{
+    "name": "nys-job-analyst-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "commonjs",
+    "scripts": {
+        "dev": "nodemon --exec ts-node -r tsconfig-paths/register src/index.ts",
+        "build": "tsc && tsc-alias",
+        "start": "node -r tsconfig-paths/register dist/src/index.js"
+    },
+    "author": "Olin Kirkland",
+    "devDependencies": {
+        "@types/cors": "^2.8.18",
+        "@types/dotenv": "^8.2.3",
+        "@types/express": "^5.0.2",
+        "@types/node": "^22.15.23",
+        "@types/uuid": "^10.0.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "@types/axios": "^0.9.36",
+        "@types/cheerio": "^0.22.35",
+        "axios": "^1.12.2",
+        "cheerio": "^1.1.2",
+        "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "nodemon": "^3.1.10",
+        "postgres": "^3.4.7",
+        "prettier": "^3.5.3",
+        "status-code-enum": "^1.0.0",
+        "tsc-alias": "^1.8.16",
+        "tsconfig-paths": "^4.2.0",
+        "uuid": "^11.1.0"
+    }
+}
