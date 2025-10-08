@@ -1,7 +1,10 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import ProgressBar from 'progress';
+import sql from './database/db';
+import { Job } from './job';
 
-export async function fetchNewJobIds() {
+export async function updateJobSummaries() {
     // Get the new jobs from the NYS Jobs RSS feed url
     const url = 'https://statejobs.ny.gov/rss/employeerss.cfm';
     const response = await axios.get(url);
@@ -9,17 +12,16 @@ export async function fetchNewJobIds() {
     // Parse the response as an XML document
     const $ = cheerio.load(response.data as string, { xmlMode: true });
     const items = $('item');
-    console.log(`Found ${items.length} items in the RSS feed.`);
-    console.log('Parsing items...');
+    console.log(`Parsing ${items.length} job summaries from RSS feed...`);
 
-    const jobs: Job[] = items
+    const rssJobSummaries: Job[] = items
         .map((i, el) => {
             // title is the job title
-            const title = $(el).find('title').text();
+            const title = $(el).find('title').text().trim();
             // link is a full URL
-            const link = $(el).find('link').text();
-            // pubDate is in RFC-822 format
-            const pubDate = new Date($(el).find('pubDate').text());
+            const link = $(el).find('link').text().trim();
+            // publishDate is in RFC-822 format
+            const publishDate = new Date($(el).find('pubDate').text());
             // The description field contains multiple pieces of information
             const description = $(el).find('description').text();
             // Extract fields from description using regex
@@ -35,7 +37,7 @@ export async function fetchNewJobIds() {
                 id: idMatch ? parseInt(idMatch[1], 10) : NaN,
                 link,
                 title,
-                pubDate,
+                publishDate,
                 deadline: deadlineMatch
                     ? new Date(deadlineMatch[1])
                     : new Date(0),
@@ -45,61 +47,79 @@ export async function fetchNewJobIds() {
         })
         .get();
 
-    console.log(`Parsed ${jobs.length} jobs.`);
-    // Log the last 5 jobs for verification
-    jobs.slice(-5).forEach((job) => {
-        console.log(job.toString());
+    console.log('Parsing complete!');
+    console.log(`Filtering to jobs with deadlines that haven't passed...`);
+
+    const now = new Date();
+    const rssJobSummariesFiltered = rssJobSummaries.filter((job) => {
+        // Filter out jobs that passed the deadline
+        return job.deadline >= now;
     });
+    console.log(`Filtering complete! (${rssJobSummariesFiltered.length} jobs)`);
+
+    console.log('Updating database with new or changed jobs...');
+    const total = rssJobSummariesFiltered.length;
+    const bar = new ProgressBar(`[:bar] :current/${total} :percent`, {
+        total: rssJobSummariesFiltered.length,
+        width: 36
+    });
+
+    const existingJobs = await sql`SELECT id, summaryHash FROM jobs`;
+    const jobsMap = new Map(existingJobs.map((j) => [j.id, j.summaryhash]));
+    for (const rssJobSummary of rssJobSummariesFiltered) {
+        bar.tick();
+
+        // Check the database to see if the id already exists
+        if (!jobsMap.has(rssJobSummary.id)) {
+            await rssJobSummary.saveToDatabase();
+        } else {
+            // Compare the summaryHash to see if it has changed
+            const localSummaryHash = rssJobSummary.summaryHash;
+            const remoteSummaryHash = jobsMap.get(rssJobSummary.id);
+            // Compare the hashes
+            if (remoteSummaryHash !== localSummaryHash) {
+                // console.log(`Summary for job #${rssJobSummary.id} changed.`);
+                // console.log(`  Hash (-): ${remoteSummaryHash}`);
+                // console.log(`  Hash (+): ${localSummaryHash}`);
+                await rssJobSummary.saveToDatabase();
+            }
+        }
+    }
+
+    console.log('Database update complete!');
 }
 
-export class Job {
-    // From RSS feed (required)
-    id!: number; // Unique job ID
-    link!: string; // URL to job posting
-    title!: string; // Job title
-    pubDate!: Date; // Publication date
-    deadline!: Date; // Application deadline
-    grade!: string; // Job grade
-    county!: string; // Job location
+export async function updateNewJobDetails() {
+    // Get all job ids from the database that do not have a fullHash
+    const rows = await sql`SELECT * FROM jobs WHERE fullHash IS NULL`;
+    console.log(`Found ${rows.length} jobs without full details.`);
 
-    // Hashes
-    rssString?: string;
-    rssHash?: string;
-    fullString?: string;
-    fullHash?: string;
+    if (rows.length === 0) {
+        console.log('No new job details to update.');
+        return;
+    }
 
-    /**
-     * Populate from RSS feed entry
-     */
-    static fromRSS(entry: {
-        id: number;
-        link: string;
-        title: string;
-        pubDate: Date;
-        deadline: Date;
-        grade: string;
-        county: string;
-    }): Job {
+    console.log('Updating job details from job pages...');
+
+    const total = rows.length;
+    let url = null;
+    const bar = new ProgressBar(`[:bar] :current/${total} :percent :${url}`, {
+        total: rows.length,
+        width: 36
+    });
+
+    for (const row of rows) {
         const job = new Job();
-        Object.assign(job, entry);
-        return job;
+        Object.assign(job, row);
+        url = job.link;
+        bar.tick();
+        try {
+            await job.populateFromJobPage();
+            await job.saveToDatabase();
+        } catch (err) {
+            console.error(`Failed to populate job #${job.id}:`, err);
+        }
     }
 
-    /**
-     * Fetch and populate full details from the job page
-     */
-    async populateFromURL(): Promise<void> {
-        if (!this.link) throw new Error('Job link is missing');
-
-        const response = await axios.get(this.link);
-        if (typeof response.data !== 'string')
-            throw new Error('Unexpected response data type');
-        const $ = cheerio.load(response.data);
-
-        // TODO: scraping logic
-    }
-
-    toString(): string {
-        return `${this.id}\n ${this.title} in ${this.county}\n ${this.link}\n Published: ${this.pubDate.toDateString()} , deadline: ${this.deadline.toDateString()}\n Grade: ${this.grade}`;
-    }
+    console.log('Job details update complete!');
 }
