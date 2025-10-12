@@ -1,5 +1,6 @@
 import sql from '@/database/db';
 import { Job } from '@/job';
+import { createFromDatabaseObject } from '@/job-helpers';
 import { Router } from 'express';
 
 const router = Router();
@@ -12,12 +13,9 @@ const router = Router();
 
 router.get('/', async (req, res) => {
     // Placeholder: Return most recent 20 jobs
-    const dbJobs =
-        await sql`SELECT * FROM jobs ORDER BY publishDate DESC LIMIT 20`;
+    const dbJobs = await sql`SELECT * FROM jobs ORDER BY publishDate DESC LIMIT 20`;
     const jobs = dbJobs.map((dbJob) => {
-        const job = new Job();
-        Object.assign(job, dbJob);
-        return job;
+        return createFromDatabaseObject(dbJob);
     });
     res.send(jobs);
 });

@@ -1,0 +1,250 @@
+* {
+    font-family: var(--body);
+    font-size: 1.6rem;
+    color: var(--on-surface);
+}
+
+html,
+body {
+    /* Disables pull-to-refresh and overscroll glow effect.
+     Still keeps swipe navigations. */
+    overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+}
+
+.logo {
+    font-family: var(--display);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1.6rem;
+    font-weight: normal;
+    color: var(--on-surface);
+}
+
+h3 {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: var(--surface-alt);
+    text-transform: uppercase;
+}
+
+h4 {
+    opacity: 0.5;
+    font-size: 1.2rem;
+    text-align: center;
+    font-weight: normal;
+}
+
+h5 {
+    position: relative;
+    top: -0.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    border-radius: 5px;
+    background-color: var(--surface-alt);
+    color: var(--background);
+    height: 2rem;
+    padding: 0 0.6rem;
+    margin-right: 0.4rem;
+}
+
+p {
+    line-height: 1.4;
+    :not(h5) {
+        font-size: inherit;
+    }
+
+    span.br {
+        display: block;
+        height: 0.4rem;
+        width: 100%;
+    }
+
+    ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0.8rem;
+        padding-left: 3.2rem;
+        gap: 0.4rem;
+
+        li {
+            position: relative;
+        }
+
+        li::before {
+            content: '⬥';
+            font-family: sans-serif;
+            position: absolute;
+            left: -2rem;
+        }
+
+        &:not(:first-child) {
+            margin-top: 0.4rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    p > ul {
+        // padding-left: 0;
+    }
+}
+
+pre {
+    border-left: 0.4rem solid orange;
+    text-align: left;
+    padding: 1rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-family: monospace;
+    min-height: 3.8rem;
+}
+
+.muted {
+    opacity: 0.5;
+}
+
+.full-width {
+    width: 100%;
+}
+
+:not(input) {
+    user-select: none;
+}
+
+.flex {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1rem;
+
+    &.wrap {
+        flex-wrap: wrap;
+    }
+
+    &.spread {
+        justify-content: space-between;
+        gap: 2rem;
+    }
+
+    &.center {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.page {
+    height: 100vh; // Works everywhere, but buggy on mobile Safari (includes address bar)
+    height: 100dvh; // Modern fix, uses the dynamic viewport height. Works properly with iOS Safari and all modern browsers
+    min-height: -webkit-fill-available; // Fallback for iOS Safari
+
+    gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass {
+    background-color: rgb(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+i {
+    font-size: 1.2rem;
+}
+
+* {
+    touch-action: manipulation; // Prevent double-tap zoom on mobile devices
+    -webkit-tap-highlight-color: transparent; // Prevent highlight on tap
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+:focus {
+    outline: none;
+}
+
+a {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    text-decoration: none;
+    color: var(--on-surface);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    border-bottom: 0.1rem dashed currentColor;
+    font-style: italic;
+    width: fit-content;
+
+    * {
+        font-size: inherit;
+    }
+
+    &:hover {
+        color: var(--primary-alt);
+    }
+}
+
+label {
+    font-size: 1.4rem;
+    font-weight: normal;
+    letter-spacing: 0.1rem;
+}
+
+section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ellipsis {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    max-width: 100%;
+}
+
+.text-center {
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

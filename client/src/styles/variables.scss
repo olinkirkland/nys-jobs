@@ -1,0 +1,43 @@
+// Typography
+@import url('https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+    --display: 'Oleo Script Swash Caps', serif;
+    --body: 'Arvo', serif;
+}
+
+// Colors & Shadows
+:root {
+    // Core
+    --primary-light: #dde0d2;
+    --primary: #717854;
+    --primary-alt: #5c614b;
+    --background: #edeae3; // Background
+    --surface: #ded9cf; // For cards, modals, or containers
+    --surface-border: #c4bfb2; // For borders, dividers, or outlines
+    --surface-alt: #a5998d; // For cards, modals, or containers that need to be more prominent
+    --text: #000000; // Text color
+    --overlay: rgba(0, 0, 0, 0.05); // For overlays, modals, or dark backgrounds
+
+    // Additional
+    --danger: #7a2727; // Used for danger states, alerts
+    --danger-alt: #4b1313; // Used for danger states, alerts
+
+    // Utility
+    --error: #f03e3e; // Used for error states, alerts
+
+    // Theme colors
+    --color-forest: #717854; // Gameplay
+    --color-blood: #7a2727; // Combat
+    --color-gold: #ab8450; // Adventurers
+    --color-mud: #826262; // Exploration
+    --color-bone: #7a6c63; // Monsters
+    --color-tapestry: #4f3d61; // Story kits
+
+    // Shadows
+    --shadow-sm: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+    --shadow-md: rgba(0, 0, 0, 0.4) 0px 2px 12px;
+    --shadow-lg: rgba(0, 0, 0, 0.4) 0px 10px 15px;
+    --shadow-text: rgba(0, 0, 0, 0.4) 2px 2px 2px;
+}
