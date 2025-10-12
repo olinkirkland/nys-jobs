@@ -1,10 +1,14 @@
 <template>
-    <div>
-        <h1>Job Listings</h1>
-        <button @click="fetchJobs">Fetch Jobs</button>
-        <div class="job-card-grid">
-            <JobCard v-for="job in jobs" :key="job.id" :job="job" />
+    <!-- Layout -->
+    <div class="app-layout">
+        <TheHeader></TheHeader>
+        <TheHero></TheHero>
+        <div class="jobs-container-layout">
+            <TheFilters></TheFilters>
+            <TextSearchBar></TextSearchBar>
+            <TheJobsList></TheJobsList>
         </div>
+        <TheFooter></TheFooter>
     </div>
 </template>
 
@@ -12,8 +16,14 @@
 // Use Axios to fetch data from the backend
 import axios from 'axios';
 import { ref } from 'vue';
-import JobCard from './components/JobCard.vue';
+import TextSearchBar from './components/TextSearchBar.vue';
+import TheFilters from './components/TheFilters.vue';
+import TheFooter from './components/TheFooter.vue';
+import TheHeader from './components/TheHeader.vue';
+import TheHero from './components/TheHero.vue';
+import TheJobsList from './components/TheJobsList.vue';
 import { Job } from './job';
+
 const jobs = ref<Array<Partial<Job>>>([]);
 
 function fetchJobs() {
@@ -43,11 +53,9 @@ function fetchJobs() {
 @use '@/styles/variables.scss';
 @use '@/styles/styles.scss';
 
-.job-card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(32rem, 1fr));
-    grid-auto-rows: 1fr;
-    gap: 1rem;
-    padding: 2rem;
+.jobs-container-layout {
+    max-width: 96rem;
+    border: 1px solid red;
+    margin: 0 auto;
 }
 </style>

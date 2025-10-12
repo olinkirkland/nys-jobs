@@ -1,5 +1,4 @@
 import sql from '@/database/db';
-import { Job } from '@/job';
 import { createFromDatabaseObject } from '@/job-helpers';
 import { Router } from 'express';
 
