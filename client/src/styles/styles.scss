@@ -92,12 +92,6 @@ p {
     }
 }
 
-@media (max-width: 768px) {
-    p > ul {
-        // padding-left: 0;
-    }
-}
-
 pre {
     border-left: 0.4rem solid orange;
     text-align: left;
@@ -168,7 +162,7 @@ pre {
 }
 
 i {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
 }
 
 * {
@@ -188,12 +182,11 @@ i {
 }
 
 a {
-    gap: 0.4rem;
-    // text-decoration: none;
     cursor: pointer;
     font-style: italic;
     width: fit-content;
-    color: var(--surface);
+    white-space: nowrap;
+    color: var(--body);
     opacity: 0.6;
 
     > i {

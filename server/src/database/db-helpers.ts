@@ -2,7 +2,7 @@ import { Job } from '@/job';
 import sql from './db';
 
 export async function createTable() {
-    sql`
+    await sql`
         CREATE TABLE IF NOT EXISTS jobs (
             -- Summary
             id SERIAL PRIMARY KEY,
@@ -58,7 +58,11 @@ export async function createTable() {
             contactZip TEXT,
             notesOnApplying TEXT,
 
-            lastScraped TIMESTAMP
+            -- Misc
+            lastScraped TIMESTAMP,
+
+            -- Human Readable
+            humanReadableAgency TEXT
         );
     `;
 }
@@ -78,7 +82,7 @@ export async function createJob(job: Partial<Job>): Promise<void> {
             streetAddress, city, state, zipCode,
             dutiesDescription, minimumQualifications, additionalComments,
             contactName, contactPhone, contactFax, contactEmail, contactStreet, contactCity, 
-            contactState, contactZip, notesOnApplying, lastScraped
+            contactState, contactZip, notesOnApplying, lastScraped, humanReadableAgency
         )
         VALUES (
             ${toDbValue(job.id)},
@@ -123,7 +127,8 @@ export async function createJob(job: Partial<Job>): Promise<void> {
             ${toDbValue(job.contactState)},
             ${toDbValue(job.contactZip)},
             ${toDbValue(job.notesOnApplying)},
-            ${toDbValue(job.lastScraped)}
+            ${toDbValue(job.lastScraped)},
+            ${toDbValue(job.humanReadableAgency)}
         )
     `;
 }

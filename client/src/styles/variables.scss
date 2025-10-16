@@ -10,11 +10,12 @@
     // Core
     --primary: #009d4c;
     --background: #edeae3; // Background
-    --surface: #f6f9fd; // For cards, modals, or containers
-    --surface-border: #ced0d0; // For borders, dividers, or outlines
-    --surface-alt: #fefefe; // For cards, modals, or containers that need to be more prominent
-    --text: #a0a4ac; // Text color
-    --text-alt: #000000; // Alternate text color (dark)
+    --surface: #f8f9fa; // For cards, modals, or containers
+    --surface-light: #fefefe; // For cards, modals, or containers that need to be more prominent
+    --surface-border: #eff1f2; // For borders, dividers, or outlines
+    --text: #858a94; // Text color
+    --text-light: #adb7c9; // Text color
+    --text-dark: #000000; // Alternate text color (dark)
     --overlay: rgba(0, 0, 0, 0.05); // For overlays, modals, or dark backgrounds
 
     // Utility
@@ -30,7 +31,7 @@
 
     // Shadows
     --shadow-sm: rgba(0, 0, 0, 0.1) 0px 1px 3px;
-    --shadow-md: rgba(0, 0, 0, 0.4) 0px 2px 12px;
+    --shadow-md: rgba(0, 0, 0, 0.08) 0px 5px 10px;
     --shadow-lg: rgba(0, 0, 0, 0.4) 0px 10px 15px;
     --shadow-text: rgba(0, 0, 0, 0.4) 2px 2px 2px;
 }

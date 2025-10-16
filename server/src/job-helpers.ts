@@ -6,6 +6,7 @@ import sql from './database/db';
 import { Job } from './job';
 import { createJob, deleteJob } from './database/db-helpers';
 import { fetchJobDataFromURL } from './web-scraper';
+import humanReadableAgenciesJson from './assets/human-readable-agencies.json';
 
 /**
  * Get the latest RSS feed, update the database based on the RSS feed
@@ -112,6 +113,35 @@ export async function updateJobDetailsFromWebsites() {
 }
 
 /**
+ * Execute various functions that improve the readability of the data
+ */
+
+export async function updateHumanReadableDetails() {
+    console.log('Updating human readable fields');
+    await updateHumanReadableAgencies();
+    console.log('Human readable fields updated!');
+}
+
+async function updateHumanReadableAgencies() {
+    const rows = await sql`
+        SELECT * FROM jobs
+        WHERE humanReadableAgency IS NULL
+        AND agency IS NOT NULL`;
+    for (const row of rows) {
+        const { id, agency } = row;
+        const humanReadableAgency = humanReadableAgenciesJson.find(
+            (a) => a.match.toLowerCase() === agency.toLowerCase()
+        );
+        if (humanReadableAgency) {
+            await sql`UPDATE jobs
+              SET humanReadableAgency = ${humanReadableAgency.name}
+              WHERE id = ${id}
+              `;
+        }
+    }
+}
+
+/**
  * Create a Job pulled from the NYS RSS feed
  */
 export function createFromRSSObject(entry: {
@@ -191,6 +221,9 @@ export function createFromDatabaseObject(dbJob: any): Partial<Job> {
     job.contactState = dbJob.contactstate;
     job.contactZip = dbJob.contactzip;
     job.notesOnApplying = dbJob.notesonapplying;
+
+    // Human Readable
+    job.humanReadableAgency = dbJob.humanreadableagency;
 
     return job;
 }

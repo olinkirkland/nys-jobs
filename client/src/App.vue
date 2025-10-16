@@ -1,30 +1,27 @@
 <template>
     <!-- Layout -->
     <div class="app-layout">
-        <TheHeader></TheHeader>
-        <TheHero></TheHero>
         <div class="jobs-container-layout">
             <TheFilters></TheFilters>
-            <TextSearchBar></TextSearchBar>
-            <TheJobsList></TheJobsList>
+            <div class="jobs-container-layout__nested">
+                <!-- Input TODO -->
+                <p>{{ jobs.length }} listings found</p>
+                <TheJobsList :jobs="jobs"></TheJobsList>
+            </div>
         </div>
-        <TheFooter></TheFooter>
     </div>
 </template>
 
 <script setup lang="ts">
 // Use Axios to fetch data from the backend
 import axios from 'axios';
-import { ref } from 'vue';
-import TextSearchBar from './components/TextSearchBar.vue';
+import { onMounted, ref } from 'vue';
 import TheFilters from './components/TheFilters.vue';
-import TheFooter from './components/TheFooter.vue';
-import TheHeader from './components/TheHeader.vue';
-import TheHero from './components/TheHero.vue';
 import TheJobsList from './components/TheJobsList.vue';
 import { Job } from './job';
 
 const jobs = ref<Array<Partial<Job>>>([]);
+onMounted(() => fetchJobs());
 
 function fetchJobs() {
     axios
@@ -32,13 +29,9 @@ function fetchJobs() {
         .then((response) => {
             response.data.forEach((jobData: any) => {
                 const job: Partial<Job> = {};
-                job.id = jobData.id;
-                job.title = jobData.title;
-                job.county = jobData.county;
+                Object.assign(job, jobData);
                 job.publishDate = new Date(jobData.publishDate);
                 job.deadline = new Date(jobData.deadline);
-                job.link = jobData.link;
-                job.summaryHash = jobData.summaryHash;
                 jobs.value.push(job);
             });
         })
@@ -54,8 +47,19 @@ function fetchJobs() {
 @use '@/styles/styles.scss';
 
 .jobs-container-layout {
-    max-width: 96rem;
-    border: 1px solid red;
     margin: 0 auto;
+    display: flex;
+    height: 100vh;
+    .jobs-container-layout__nested {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        > p {
+            padding: 1rem;
+            padding-bottom: 0;
+            text-align: center;
+        }
+    }
 }
 </style>

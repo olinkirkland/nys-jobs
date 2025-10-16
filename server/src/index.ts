@@ -1,10 +1,11 @@
 import dotenv from 'dotenv';
 import { createTable } from './database/db-helpers';
-import { updateJobDetailsFromWebsites, updateJobSummariesFromRSS } from './job-helpers';
+import { updateHumanReadableDetails, updateJobDetailsFromWebsites, updateJobSummariesFromRSS } from './job-helpers';
 import { createServer } from './server';
 import sql from './database/db';
 
 async function main() {
+    // WARNING: DON'T DROP THE TABLE UNLESS YOU'RE TOTALLY SURE YOU WANT TO DO THAT
     // For development purposes, drop the table to start fresh
     if (false) await sql`DROP TABLE IF EXISTS jobs;`;
 
@@ -14,11 +15,17 @@ async function main() {
     // On start, and on an interval thereafter, update the job list
     await updateJobSummariesFromRSS();
     await updateJobDetailsFromWebsites();
+    await updateHumanReadableDetails();
+
+    // Get a list of unique job.agency
+    // const rows = await sql`SELECT DISTINCT agency FROM jobs;`;
+    // console.log(rows);
 
     setInterval(
         async () => {
             await updateJobSummariesFromRSS();
             await updateJobDetailsFromWebsites();
+            await updateHumanReadableDetails();
         },
         1000 * 60 * Number(process.env.FETCH_INTERVAL_MINUTES)
     );

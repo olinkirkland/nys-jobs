@@ -1,0 +1,172 @@
+[
+    { "name": "Office of the MTA Inspector General", "match": "MTA Inspector General, Office of", "description": "" },
+    { "name": "Teachers' Retirement System", "match": "Teachers' Retirement System", "description": "" },
+    {
+        "name": "Division of Criminal Justice Services",
+        "match": "Criminal Justice Services, Division of",
+        "description": ""
+    },
+    {
+        "name": "Department of Health - Veterans Home at Batavia",
+        "match": "Health, Department of - Veterans Home at Batavia",
+        "description": ""
+    },
+    { "name": "SUNY Delhi", "match": "SUNY Delhi", "description": "" },
+    { "name": "SUNY Stony Brook", "match": "SUNY Stony Brook", "description": "" },
+    { "name": "SUNY Geneseo", "match": "SUNY Geneseo", "description": "" },
+    {
+        "name": "Department of Health - Veterans Home at Oxford",
+        "match": "Health, Department of - Veterans Home at Oxford",
+        "description": ""
+    },
+    { "name": "New York State Education Department", "match": "Education Department, State", "description": "" },
+    { "name": "New York State Thruway Authority", "match": "Thruway Authority", "description": "" },
+    { "name": "New York State Canal Corporation", "match": "Canal Corporation", "description": "" },
+    { "name": "University at Buffalo", "match": "University at Buffalo", "description": "" },
+    {
+        "name": "Office of the State Inspector General",
+        "match": "State Inspector General, Office of",
+        "description": ""
+    },
+    {
+        "name": "Environmental Facilities Corporation",
+        "match": "Environmental Facilities Corporation",
+        "description": ""
+    },
+    { "name": "Department of Civil Service", "match": "Civil Service, Department of", "description": "" },
+    { "name": "SUNY College of Environmental Science and Forestry (ESF)", "match": "SUNY ESF", "description": "" },
+    {
+        "name": "Department of Health - Veterans Home at Montrose",
+        "match": "Health, Department of - Veterans Home at Montrose",
+        "description": ""
+    },
+    {
+        "name": "Office of Parks, Recreation and Historic Preservation",
+        "match": "Parks, Recreation & Historic Preservation, Office of",
+        "description": ""
+    },
+    { "name": "SUNY College of Optometry", "match": "College of Optometry", "description": "" },
+    { "name": "Department of Motor Vehicles", "match": "Motor Vehicles, Department of", "description": "" },
+    { "name": "Office of the Attorney General", "match": "Attorney General, Office of the", "description": "" },
+    {
+        "name": "New York State Department of Taxation and Finance",
+        "match": "Taxation & Finance, State",
+        "description": ""
+    },
+    { "name": "Division of Human Rights", "match": "Human Rights, Division of", "description": "" },
+    { "name": "New York State Gaming Commission", "match": "NYS Gaming Commission", "description": "" },
+    {
+        "name": "Department of Corrections and Community Supervision",
+        "match": "Corrections and Community Supervision, Department of",
+        "description": ""
+    },
+    {
+        "name": "Office for People With Developmental Disabilities",
+        "match": "People With Developmental Disabilities, Office for",
+        "description": ""
+    },
+    { "name": "New York State Department of State", "match": "State, Department of", "description": "" },
+    {
+        "name": "Dormitory Authority of the State of New York (DASNY)",
+        "match": "DASNY - Dormitory Authority of the State of New York",
+        "description": ""
+    },
+    { "name": "New York State Insurance Fund", "match": "Insurance Fund, State", "description": "" },
+    { "name": "Department of Public Service", "match": "Public Service, Department of", "description": "" },
+    { "name": "Battery Park City Authority", "match": "Battery Park City Authority", "description": "" },
+    { "name": "Homes and Community Renewal", "match": "Homes and Community Renewal", "description": "" },
+    {
+        "name": "Justice Center for the Protection of People With Special Needs",
+        "match": "Justice Center For The Protection Of People With Special Needs",
+        "description": ""
+    },
+    { "name": "SUNY System Administration", "match": "SUNY System Administration", "description": "" },
+    { "name": "Division of State Police", "match": "State Police, Division of", "description": "" },
+    {
+        "name": "Office of Addiction Services and Supports",
+        "match": "Addiction Services and Supports, Office of",
+        "description": ""
+    },
+    { "name": "New York State Board of Elections", "match": "Board of Elections", "description": "" },
+    {
+        "name": "Department of Health - Veterans Home at St. Albans",
+        "match": "Health, Department of - Veterans Home at St. Albans",
+        "description": ""
+    },
+    {
+        "name": "Department of Environmental Conservation",
+        "match": "Environmental Conservation, Department of",
+        "description": ""
+    },
+    {
+        "name": "Higher Education Services Corporation",
+        "match": "Higher Education Services Corporation",
+        "description": ""
+    },
+    { "name": "SUNY Brockport", "match": "SUNY Brockport", "description": "" },
+    { "name": "New York State Senate", "match": "Senate, NYS", "description": "" },
+    {
+        "name": "Office of Temporary and Disability Assistance",
+        "match": "Temporary and Disability Assistance, Office of",
+        "description": ""
+    },
+    {
+        "name": "Department of Agriculture and Markets",
+        "match": "Agriculture & Markets, Department of",
+        "description": ""
+    },
+    {
+        "name": "Office of Information Technology Services",
+        "match": "Information Technology Services, Office of",
+        "description": ""
+    },
+    { "name": "Office of the State Comptroller", "match": "State Comptroller, Office of the", "description": "" },
+    { "name": "Workers' Compensation Board", "match": "Workers' Compensation Board", "description": "" },
+    { "name": "Office of General Services", "match": "General Services, Office of", "description": "" },
+    { "name": "Commission of Correction", "match": "Correction, Commission of", "description": "" },
+    { "name": "Department of Transportation", "match": "Transportation, Department of", "description": "" },
+    {
+        "name": "Office of Children and Family Services",
+        "match": "Children & Family Services, Office of",
+        "description": ""
+    },
+    { "name": "Office of Cannabis Management", "match": "Office of Cannabis Management", "description": "" },
+    { "name": "New York State Assembly Majority", "match": "Assembly Majority, NYS", "description": "" },
+    { "name": "SUNY Plattsburgh", "match": "SUNY Plattsburgh", "description": "" },
+    { "name": "Department of Financial Services", "match": "Financial Services, Department of", "description": "" },
+    { "name": "Office of Mental Health", "match": "Mental Health, Office of", "description": "" },
+    {
+        "name": "Division of Military and Naval Affairs",
+        "match": "Military and Naval Affairs, Division of",
+        "description": ""
+    },
+    {
+        "name": "Office of the Medicaid Inspector General",
+        "match": "Medicaid Inspector General, NYS Office of the",
+        "description": ""
+    },
+    {
+        "name": "Commission on Prosecutorial Conduct (CPC)",
+        "match": "Commission on Prosecutorial Conduct (CPC)",
+        "description": ""
+    },
+    { "name": "Office of Indigent Legal Services", "match": "Indigent Legal Services, Office of", "description": "" },
+    { "name": "Department of Labor", "match": "Labor, Department of", "description": "" },
+    { "name": "Office of Cannabis Management", "match": "Cannabis Management, Office of", "description": "" },
+    { "name": "Department of Health", "match": "Health, Department of", "description": "" },
+    { "name": "SUNY Old Westbury", "match": "SUNY Old Westbury", "description": "" },
+    { "name": "State University Construction Fund", "match": "State University Construction Fund", "description": "" },
+    { "name": "Public Employment Relations Board", "match": "Public Employment Relations Board", "description": "" },
+    { "name": "University at Albany", "match": "University at Albany", "description": "" },
+    { "name": "Department of Veterans' Services", "match": "Veterans' Services, Department of", "description": "" },
+    {
+        "name": "Division of Homeland Security and Emergency Services",
+        "match": "Homeland Security and Emergency Services, Division of",
+        "description": ""
+    },
+    { "name": "SUNY Maritime College", "match": "SUNY Maritime", "description": "" },
+    { "name": "Office of Court Administration", "match": "Court Administration, Office of", "description": "" },
+    { "name": "Empire State Development", "match": "Empire State Development, NYS", "description": "" },
+    { "name": "Office of Employee Relations", "match": "Employee Relations, Office of", "description": "" },
+    { "name": "Division of Alcoholic Beverage Control", "match": "Alcoholic Beverage Control", "description": "" }
+]

@@ -55,4 +55,7 @@ export type Job = {
     contactState: string; // Contact state
     contactZip: string; // Contact zip code
     notesOnApplying: string; // Notes for applying (full HTML/text content)
+
+    // Human Readable
+    humanReadableAgency: string; // Transformed agency names
 };
