@@ -20,12 +20,17 @@ import TheFilters from './components/TheFilters.vue';
 import TheJobsList from './components/TheJobsList.vue';
 import { Job } from './job';
 
+const isLocalhost = window.location.hostname.includes('localhost');
+axios.defaults.baseURL = isLocalhost
+    ? 'http://localhost:3001/api/'
+    : 'https://nys-jobsserver-production.up.railway.app/api/';
+
 const jobs = ref<Array<Partial<Job>>>([]);
 onMounted(() => fetchJobs());
 
 function fetchJobs() {
     axios
-        .get('http://s:3001/api/jobs')
+        .get('jobs')
         .then((response) => {
             response.data.forEach((jobData: any) => {
                 const job: Partial<Job> = {};
