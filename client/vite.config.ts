@@ -8,7 +8,7 @@ export default defineConfig({
     plugins: [vue()],
     server: { host: false }, // For external IP access
     // server: { host: true }, // For external IP access
-    base: '/nys-jobs',
+    base: process.env.NODE_ENV === 'development' ? '/' : '/flag-game/',
     resolve: {
         alias: {
             '@': new URL('./src', import.meta.url).pathname

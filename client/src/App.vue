@@ -25,7 +25,7 @@ onMounted(() => fetchJobs());
 
 function fetchJobs() {
     axios
-        .get('http://localhost:3001/api/jobs')
+        .get('http://s:3001/api/jobs')
         .then((response) => {
             response.data.forEach((jobData: any) => {
                 const job: Partial<Job> = {};
