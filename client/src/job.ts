@@ -60,3 +60,11 @@ export type Job = {
     humanReadableAgency: string; // Transformed agency names
     humanReadableExtractedData: any; // Extracted using Google Gemini (ai-parser.ts)
 };
+
+export type AIParsedJobData = {
+    semanticJobTitle: string;
+    threeBulletPointsDescription: string[];
+    minQualifications: string[];
+    prefQualifications: string[];
+    duties: string[];
+};

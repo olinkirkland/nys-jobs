@@ -17,8 +17,8 @@ ul {
     height: 100%;
     overflow-y: auto;
     overflow-x: visible;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64rem, 1fr));
     gap: 1rem;
     padding: 1rem;
     scrollbar-width: none; /* Firefox */

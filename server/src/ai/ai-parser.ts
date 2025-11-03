@@ -8,11 +8,11 @@ export async function extractJobData(text: string) {
 Extract structured fields from the job posting. Output JSON only.
 
 Fields:
-- semanticJobTitle (string)
-- threeBulletPointsDescription (array)
-- minQualifications (array)
-- prefQualifications (array)
-- duties (array)
+- semanticJobTitle (string): Keep it short, and more descriptive than the original title if possible.
+- threeBulletPointsDescription (array): Each bullet point should be max 10 words.
+- minQualifications (array): Up to 5 minimum qualifications. Keep it concise.
+- prefQualifications (array): Up to 5 preferred qualifications. Keep it concise.
+- duties (array): Up to 5 main duties. Keep it concise and action-oriented.
 
 Text:
 """${text}"""

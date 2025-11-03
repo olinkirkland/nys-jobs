@@ -2,15 +2,22 @@
     <Card class="full-width">
         <header>
             <div class="name-department-tags">
-                <h2>{{ job.title }}</h2>
+                <h2>{{ aiParsedJobData?.semanticJobTitle }}</h2>
+                <p>
+                    <em>{{ job.title }}</em>
+                </p>
+
                 <span>{{ job.humanReadableAgency }}</span>
+
                 <div class="tags">
                     <span v-if="job.telecommutingAllowed"><Tag color="green">Telecommuting Allowed</Tag></span>
                     <!-- <span>• <Tag color="orange">Tag 1</Tag></span> -->
                     <!-- <span>• <Tag color="orange">Tag 1</Tag></span> -->
                     <span>Salary Grade {{ job.salaryGrade }}</span>
+                    <span>Salary Range ${{ salaryRange.from }} - ${{ salaryRange.to }}</span>
                 </div>
             </div>
+
             <div class="location-date">
                 <div class="location">
                     <i class="fas fa-map-marker-alt"></i>
@@ -18,19 +25,35 @@
                 </div>
                 <div class="date">
                     <p class="muted">Posted on {{ job.publishDate?.toDateString() }}</p>
+                    <p class="muted">Closes on {{ job.deadline?.toDateString() }}</p>
                 </div>
             </div>
         </header>
-        <!-- <p>BULLET POINTS</p> -->
-        <!-- <a :href="job.link" target="_blank">{{ job.link }}</a> -->
+        <ul class="description-list">
+            <li v-for="str in aiParsedJobData?.threeBulletPointsDescription">
+                {{ str }}
+            </li>
+        </ul>
+        <!-- <pre v-if="aiParsedJobData">{{ aiParsedJobData }}</pre> -->
+        <a :href="job.link" target="_blank">{{ job.link }}</a>
     </Card>
 </template>
 
 <script setup lang="ts">
-import { Job } from '../job';
-defineProps<{
+import { computed } from 'vue';
+import { AIParsedJobData, Job } from '../job';
+import { calculateSalaryRangeFromGrade } from '@/salary-grade-calculator';
+const props = defineProps<{
     job: Partial<Job>;
 }>();
+
+const aiParsedJobData: AIParsedJobData | null = props.job.humanReadableExtractedData
+    ? (props.job.humanReadableExtractedData as AIParsedJobData)
+    : null;
+
+const salaryRange = computed(() => {
+    return calculateSalaryRangeFromGrade(props.job.salaryGrade || '') || { from: 'N/A', to: 'N/A' };
+});
 </script>
 
 <style scoped lang="scss">
@@ -68,5 +91,21 @@ header {
             gap: 0.6rem;
         }
     }
+}
+
+ul.description-list {
+    padding: 1rem;
+    border: 1px solid var(--surface-border);
+    border-radius: 5px;
+    li {
+        list-style: disc;
+        margin-left: 2rem;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 </style>
