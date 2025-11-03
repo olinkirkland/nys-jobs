@@ -1,5 +1,5 @@
 <template>
-    <Card>THE FILTERS</Card>
+    <Card>FILTERS</Card>
 </template>
 
 <style lang="scss" scoped>

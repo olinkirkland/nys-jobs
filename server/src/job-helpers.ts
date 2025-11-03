@@ -2,11 +2,12 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { createHash } from 'crypto';
 import ProgressBar from 'progress';
-import sql from './database/db';
-import { Job } from './job';
-import { createJob, deleteJob } from './database/db-helpers';
-import { fetchJobDataFromURL } from './web-scraper';
 import humanReadableAgenciesJson from './assets/human-readable-agencies.json';
+import sql from './database/db';
+import { createJob, deleteJob } from './database/db-helpers';
+import { Job } from './job';
+import { fetchJobDataFromURL } from './web-scraper';
+import { extractJobData } from './ai/ai-parser';
 
 /**
  * Get the latest RSS feed, update the database based on the RSS feed
@@ -141,6 +142,45 @@ async function updateHumanReadableAgencies() {
     }
 }
 
+export async function updateAIParsedDetails() {
+    const countyFilter = process.env.AI_COUNTY_FILTER?.split(',').map((c) => c.toLowerCase().trim()) || [];
+    if (!countyFilter.length) return;
+    // Get all jobs that fit the county filter. Ignore case. They must also not have humanReadableExtractedData yet, and must not be past the deadline date
+    const rows = await sql`
+        SELECT *
+        FROM jobs
+        WHERE humanReadableExtractedData IS NULL
+        AND (deadlineDate IS NULL OR deadlineDate >= NOW())
+        AND LOWER(county) IN ${sql(countyFilter)}
+    `;
+
+    const countyCounts: { [key: string]: number } = {};
+    for (const row of rows) {
+        const county = row.county || 'Unknown';
+        countyCounts[county] = (countyCounts[county] || 0) + 1;
+    }
+    console.table(countyCounts);
+    console.log(`Updating AI parsed details...`);
+
+    const progress = new ProgressBar(`[:bar] :current/:total :percent`, {
+        total: rows.length,
+        width: 36
+    });
+
+    for (const row of rows) {
+        progress.tick();
+        const dutiesDescription = row.dutiesdescription;
+        const minimumQualifications = row.minimumqualifications;
+        const additionalComments = row.additionalcomments;
+        const extractedJobData = await extractJobData(
+            `DUTIES: ${dutiesDescription} ... MINIMUM QUALIFICATIONS: ${minimumQualifications} ... ADDITIONAL COMMENTS: ${additionalComments}`
+        );
+        const job = createFromDatabaseObject(row);
+        job.humanReadableExtractedData = extractedJobData;
+        await saveToDatabase(job);
+    }
+}
+
 /**
  * Create a Job pulled from the NYS RSS feed
  */
@@ -224,6 +264,7 @@ export function createFromDatabaseObject(dbJob: any): Partial<Job> {
 
     // Human Readable
     job.humanReadableAgency = dbJob.humanreadableagency;
+    job.humanReadableExtractedData = dbJob.humanreadableextracteddata;
 
     return job;
 }

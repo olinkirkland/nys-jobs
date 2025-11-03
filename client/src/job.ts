@@ -58,4 +58,5 @@ export type Job = {
 
     // Human Readable
     humanReadableAgency: string; // Transformed agency names
+    humanReadableExtractedData: any; // Extracted using Google Gemini (ai-parser.ts)
 };

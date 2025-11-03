@@ -5,6 +5,7 @@
             <TheFilters></TheFilters>
             <div class="jobs-container-layout__nested">
                 <!-- Input TODO -->
+                <input v-model="filterId" />
                 <p>{{ jobs.length }} listings found</p>
                 <TheJobsList :jobs="jobs"></TheJobsList>
             </div>
@@ -27,6 +28,8 @@ axios.defaults.baseURL = isLocalhost
 
 const jobs = ref<Array<Partial<Job>>>([]);
 onMounted(() => fetchJobs());
+
+const filterId = ref();
 
 function fetchJobs() {
     axios

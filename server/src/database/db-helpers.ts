@@ -62,7 +62,8 @@ export async function createTable() {
             lastScraped TIMESTAMP,
 
             -- Human Readable
-            humanReadableAgency TEXT
+            humanReadableAgency TEXT,
+            humanReadableExtractedData JSON
         );
     `;
 }
@@ -82,7 +83,7 @@ export async function createJob(job: Partial<Job>): Promise<void> {
             streetAddress, city, state, zipCode,
             dutiesDescription, minimumQualifications, additionalComments,
             contactName, contactPhone, contactFax, contactEmail, contactStreet, contactCity, 
-            contactState, contactZip, notesOnApplying, lastScraped, humanReadableAgency
+            contactState, contactZip, notesOnApplying, lastScraped, humanReadableAgency, humanReadableExtractedData
         )
         VALUES (
             ${toDbValue(job.id)},
@@ -128,12 +129,13 @@ export async function createJob(job: Partial<Job>): Promise<void> {
             ${toDbValue(job.contactZip)},
             ${toDbValue(job.notesOnApplying)},
             ${toDbValue(job.lastScraped)},
-            ${toDbValue(job.humanReadableAgency)}
+            ${toDbValue(job.humanReadableAgency)},
+            ${toDbValue(job.humanReadableExtractedData)}
         )
     `;
 }
 
 // Ensure undefined values are changed to null
-function toDbValue<T>(value: T | undefined): T | null {
+export function toDbValue<T>(value: T | undefined): T | null {
     return value ?? null;
 }
