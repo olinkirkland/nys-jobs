@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
+// TODO: Add error handling and rate limiting as needed
 export async function extractJobData(text: string) {
     const prompt = `
 Extract structured fields from the job posting. Output JSON only.

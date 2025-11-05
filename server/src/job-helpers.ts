@@ -172,12 +172,18 @@ export async function updateAIParsedDetails() {
         const dutiesDescription = row.dutiesdescription;
         const minimumQualifications = row.minimumqualifications;
         const additionalComments = row.additionalcomments;
-        const extractedJobData = await extractJobData(
-            `DUTIES: ${dutiesDescription} ... MINIMUM QUALIFICATIONS: ${minimumQualifications} ... ADDITIONAL COMMENTS: ${additionalComments}`
-        );
-        const job = createFromDatabaseObject(row);
-        job.humanReadableExtractedData = extractedJobData;
-        await saveToDatabase(job);
+        try {
+            const extractedJobData = await extractJobData(
+                `DUTIES: ${dutiesDescription} ... MINIMUM QUALIFICATIONS: ${minimumQualifications} ... ADDITIONAL COMMENTS: ${additionalComments}`
+            );
+            const job = createFromDatabaseObject(row);
+            job.humanReadableExtractedData = extractedJobData;
+            await saveToDatabase(job);
+        } catch (error) {
+            // Assume rate limit hit, wait 60 seconds
+            console.log('\nError extracting job data, likely rate limit hit. Waiting 60 seconds...');
+            await new Promise((resolve) => setTimeout(resolve, 60000));
+        }
     }
 }
 
